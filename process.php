@@ -1,6 +1,7 @@
 <?php  
-  $conn = mysqli_connect('localhost','root','123456');
-  $db_select = mysqli_select_db($conn,"webapp");
+  require("lib/db.php");
+  require("config/config.php");
+  $conn = db_init($config['dhost'],$config['duser'],$config['dpasswd'],$config['dname']);
 
   $title = mysqli_real_escape_string($conn, $_POST['title']);
   $author = mysqli_real_escape_string($conn, $_POST['author']);
