@@ -17,7 +17,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" href="assets/css/style.css" />
-    <title>Home | webapp</title>
+    <title>Write | webapp</title>
   </head>
   <body id="target">
     <header>
@@ -27,7 +27,7 @@
       <ol>
           <?php 
             while ($row = mysqli_fetch_assoc($result)) {
-              echo "<a href=http://localhost/index.php?id=".$row['id']."><li>".htmlspecialchars($row['title'])."</li></a>";
+              echo "<a href=http://localhost/index.php?id=".$row['id']."><li>".$row['title']."</li></a>";
             }
           ?>
           
@@ -47,19 +47,12 @@
       <a href="http://localhost/write.php">쓰기</a>
     </div>
     <article>
-      <?php 
-        if (empty($_GET['id']) === false) {
-          $sql = "SELECT topic.id,title,name,description FROM topic LEFT JOIN user ON topic.author = user.id WHERE topic.id=".$_GET['id'];
-        $result = mysqli_query($conn, $sql);
-        $row = mysqli_fetch_assoc($result);
-        echo "<h2>".htmlspecialchars($row["title"])."</h2>";
-        echo "<p>".htmlspecialchars($row['name'])."</p>";
-        echo strip_tags($row['description'], '<a><h1><h2><h3><h4><h5><ul><ol><li>');
-        } else {
-          echo "<h1>환영합니다</h1>";
-        }
-        
-      ?>
+      <form action="process.php" method="post">
+          <input type="text" placeholder="제목" name="title">
+          <input type="text" placeholder="작성자" name="author">
+          <textarea cols="30" rows="10" placeholder="내용" name="description"></textarea>
+          <input type="submit" value="완료">
+      </form>
     </article>
   </body>
 </html>
